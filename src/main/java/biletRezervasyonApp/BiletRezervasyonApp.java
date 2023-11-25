@@ -39,6 +39,7 @@ Project: Bilet Rezervasyon ve Bilet Fiyatı Hesaplama Uygulaması
         start(bus,bilet);
     }
 
+
     private static void start(Bus bus, Ticket bilet) {
         Scanner scan=new Scanner(System.in);
         int select;//cıkıs icin 5 secin;
@@ -61,19 +62,22 @@ Project: Bilet Rezervasyon ve Bilet Fiyatı Hesaplama Uygulaması
             System.out.println(bus.seats);//mevcut koltuk nolari: 1,2,4,5
             String seat= scan.next();
             //secilen koltuk no listede var mi, rezerve edilmiş mi
-            boolean isReserved=!bus.seats.contains(seat);
-            if (isReserved){
+            boolean isReserved=bus.seats.contains(seat);
+            if (!isReserved){
                 System.out.println("Seçilen koltuk rezerve edilmistir. ");
             }
             //girilen degerler gecerli mi
-            if (age>0 && distance>0 && (type==1||type==2) && !isReserved){
+            if (age>0 && distance>0 && (type==1||type==2) && isReserved){
                 //koltuk no rezerve olucak o zmn napalim listeden cıkarmamız
                 bus.seats.remove(seat);
                 //bileti olusturalim
+                //bu ve;
                 bilet.distance=distance;
                 bilet.typeNo=type;
                 bilet.seatNo=seat;
                 bilet.getTotalPrice(age);
+                //bu aralıgı yoruma dusurunce de calıstı
+
                 //bileti yazdiralim
                 bilet.printTicket(bus);
             }else {
@@ -86,7 +90,6 @@ Project: Bilet Rezervasyon ve Bilet Fiyatı Hesaplama Uygulaması
         System.out.println("iyi günler dileriz ve tekrar bekleriz <3");
 
 
-        //deneme
     }
 
 }
