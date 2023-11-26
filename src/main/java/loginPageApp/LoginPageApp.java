@@ -1,6 +1,10 @@
+
+
 package loginPageApp;
 
-    /*
+import java.util.Scanner;
+
+/*
 
         Project: Bir siteye üye olma ve giriş yapma sayfası tasarlayınız.
 
@@ -26,13 +30,45 @@ package loginPageApp;
         : en az bir tane rakam içermeli
         : en az bir tane sembol içermeli
         */
+public class LoginPageApp {
+    public static void main(String[] args) {
+        //1- tüm userlar icin ortak özellikleri bir classa tasidik.
+        //2- userla ilgili işlemler icin userService Classini olusturduk.
+        //7- start methodu
+        start();
+    }
 
-    public class LoginPageApp {
-        public static void main(String[] args) {
-            //1- tüm userlar icin ortak özellikleri bir classa tasidik.
-            //2- userla ilgili işlemler icin userService Classini olusturduk.
+    private static void start() {
+        Scanner scan=new Scanner(System.in);
+        //1)service objesi olusturalim
+        UserService user=new UserService();
+        int select;
+        do {
+            System.out.println("*******TECHPROEDUCATİON*******");
+            System.out.println("1- üye ol");
+            System.out.println("2- giriş yap");
+            System.out.println("0- ÇIKIŞ");
+            System.out.println("seciminiz : ");
+            select=scan.nextInt();
+            switch (select){
+                case 1:
+                    user.register();
+                    System.out.println(user.emails);
+                    System.out.println(user.passwords);
+                    break;
+                case 2:
+                    user.login();
+                    break;
+                case 0:
+                    System.out.println("iyi günler dileriz...");
+                    break;
+                default:
+                    System.out.println("hatali giris tekrar deneyiniz");
+                    break;
+            }
 
 
-        }
+        }while (select!=0);
 
     }
+}

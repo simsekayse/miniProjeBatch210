@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class UserService {
-    List<String> emails=new ArrayList<>();
+    List<String>emails=new ArrayList<>();
 
     List<String>passwords=new ArrayList<>();
 
@@ -26,8 +26,11 @@ public class UserService {
                 System.out.println("Bu email zaten kayitlı bir kullanici tarafindan kullanilmakta");
                 isValid=false;
             }
+        }while (!isValid);//while içi true olması donguyu devam ettırıyor
+        //yazıyla (true) veya boolean ile olusturdugumuz variable sayesinde donguyu devam ettiriyoruz
+        //burdaki mevzu da dogru olan bir password dueumunda ! ile içerisiyle false yaptık ve
+        // donguyu kırdık.dongu bitsin ve bir sonra ki adıma gecsın diye
 
-        }while (!isValid);
         //5 password olusturalim
         String password;
         boolean isValidPassword;
@@ -35,15 +38,14 @@ public class UserService {
             System.out.println("Şifrenizi olusturunuz : ");
             password=input.nextLine();
             isValidPassword=validatePassword(password);
-
         }while (!isValidPassword);
+
         //6 user olusturalım
         User user=new User(name,email,password);
         this.emails.add(user.email);
         this.passwords.add(user.password);
         System.out.println("Tebrikler, kayıt işlemi başaruıyla gerceklesti.");
         System.out.println("Email ve şifreniz ile sisteme giriş yapabilirsiniz.");
-
 
     }
 
@@ -81,6 +83,34 @@ public class UserService {
         }
 
         return isValid;
+    }
+    public void login(){
+        Scanner scan=new Scanner(System.in);
+        System.out.println("Email adresinizi giriniz : ");
+        String email=scan.nextLine();
+        //girilen mail listede var mi
+        boolean isExistEmail=this.emails.contains(email);
+        if (isExistEmail){
+            //kullanicin kaydi vardir sifreyi kontrol ederiz
+            int sayac=3;
+            while (sayac>0){
+                System.out.println("Şifrenizi giriniz : ");
+                String passw=scan.nextLine();
+                //sifre ile email ayni indexte mi;
+                int index=this.emails.indexOf(email);
+                if (this.passwords.get(index).equals(passw)){//ahmetfurkan.... = Asd1234.
+                    System.out.println("sisteme basarili bir sekilde giris yaptiniz. hoşgeldiniz.");
+                    break;
+                }else {
+                    sayac--;
+                    System.out.println("şifrenizi yanlis ya da eksik girdiniz lutfen tekrar deneyenizi kalan deneme hakkiniz : "+sayac);
+                }
+            }
+        }else {
+            System.out.println("Sisteme kayitli bir kullanici bulunamadi. ");
+            System.out.println("üyeyseniz bilgilerinizi kontrol ediniz, degilseniz üye olunuz!");
+        }
+
     }
 
     private boolean validateEmail(String email) {
